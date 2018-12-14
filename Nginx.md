@@ -1,4 +1,4 @@
-- https://varnish-cache.org/
+- https://www.nginx.com/
 - Tested version:
 
 ## Basics
