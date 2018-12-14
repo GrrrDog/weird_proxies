@@ -4,6 +4,9 @@ The article (link) describes the goals of the research and how you can use the c
  
 Analyzed stuff:
 - [Nginx](nginx)
-- Apache 2.4
-- Haproxy
-- Varnish
+- [Apache]()
+- [Haproxy](haproxy)
+- [Varnish](varnish)
+- [Nuster](nuster)
+
+- [Browsers](browsers)
