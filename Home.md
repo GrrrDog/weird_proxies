@@ -9,5 +9,5 @@ Analyzed stuff:
 - [Varnish](varnish)
 - [Nuster](nuster)
 
-
+Additional:
 - [Browsers](browsers)
