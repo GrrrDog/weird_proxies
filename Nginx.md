@@ -2,7 +2,7 @@
 - Tested version:
 
 ## Basics
-- case-sensitive for verb 
+- case-sensitive for verb (get != GET)
 - doesn't treat // as a directory (/images/1.jpg/..//../1.jpg -> /1.jpg)
 
 ## Fingerprint
@@ -30,7 +30,7 @@ https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-
   - // -> /
 - if trailing slash is in proxy_pass, it sends processed request
   - doesn't encode `' " < > /`
-  - doesn't encode `%2f` to `/`, which useful for %2f..
+  - doesn't decode `%2f` to `/`, which useful for %2f..
 - if no trailing slash is in proxy_pass, it sends initial request
 - `proxy_pass http://$host/` (with ending `/`) doesn't proxy path-part
   - `proxy_pass http://192.168.78.111:9999 -> http://192.168.78.111:9999/path_from_location/`
@@ -40,6 +40,7 @@ https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-
 then forward encoded value
 - doesn't allow >1 `Host` header
 - doesn't forward headers with space symbols in name (` AnyHeader:` or `AnyHeader :`)
+- no additional headers to backend
 
 ### Caching
 - Nginx only caches GET and HEAD requests
