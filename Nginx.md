@@ -9,7 +9,7 @@
 - `Server: nginx`
 
 ## Absolute-URI
-- support Absolute-URI with higher priority under host header
+- supports Absolute-URI with higher priority under host header
 - any scheme in Absolute-URI
 - doesn't like @ in Absolute-URI
 
@@ -23,6 +23,7 @@
 https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms
 
 ## proxy_pass
+- backend (URL to origin) is uncontrollable 
 - parses, url-decodes, normalizes, finds location
   - cut off #fragment
   - doesn't normalize /..
@@ -37,6 +38,7 @@ https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-
 - set HTTP/1.0 by default
 - `$host` - its value equals the server name in the “Host” request; `$http_host`- An unchanged "Host" request
 then forward encoded value
+- doesn't allow >1 `Host` header
 - doesn't forward headers with space symbols in name (` AnyHeader:` or `AnyHeader :`)
 
 ### Caching
