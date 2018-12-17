@@ -42,7 +42,7 @@ https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-
   - doesn't normalize /..
   - // -> /
 - if trailing slash is in proxy_pass(`proxy_pass http://backend/`), it sends the processed request
-  - doesn't url encode ``!"$&'()*+,-./:;<=>@[\]^_`{|}~``
+  - from url-encoded path it doesn't url encode ``!"$&'()*+,-./:;<=>@[\]^_`{|}~``
     - `%2f` to `/`, which useful for %2f..
     - `<> ' " ` - useful for xss
   - encoded `%23 %25 %3F`, %01-20, >%7F
