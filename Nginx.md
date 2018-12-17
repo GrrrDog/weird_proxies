@@ -5,6 +5,9 @@
 - case-sensitive for verb 
 - doesn't treat // as a directory (/images/1.jpg/..//../1.jpg -> /1.jpg)
 
+## Fingerprint
+- `Server: nginx`
+
 ## Absolute-URI
 - support Absolute-URI with higher priority under host header
 - any scheme in Absolute-URI
@@ -37,21 +40,22 @@ then forward encoded value
 - doesn't forward headers with space symbols in name (` AnyHeader:` or `AnyHeader :`)
 
 ### Caching
-- Nginx only caches GET and HEAD client requests
+- Nginx only caches GET and HEAD requests
 - It respects the Cache-Control and Expires headers from origin server 
   - It does not cache responses with Cache-Control set to Private, No-Cache, or No-Store or with Set-Cookie in the response header.  
-- Does not honor the Pragma and client's Cache-Control 
+- Does not honor the Pragma and the client's Cache-Control 
 - key for cache: host header and path+query 
   - `#`- is ordinary symbol here (?)
 
 ### Caching detections
+- X-Cache-Status: MISS - custom header which shows caching
 - If caching is enabled, the header fields “If-Modified-Since”, “If-Unmodified-Since”, “If-None-Match”, “If-Match”, “Range”, and “If-Range” from the original request are not passed to the origin server.
 - doesn't care If-Match for uncached content
 - cares If-Match for cached content:
   - W/"0815" - returns 412 Precondition Failed 
   - If-Match: * returns body
 - doesn't care Range headers
-- X-Cache-Status: MISS - custom header which shows caching
+
 
 ## Vulnerable configs
 - one level traversal `/host_noslash_path../somthing/` -> 
