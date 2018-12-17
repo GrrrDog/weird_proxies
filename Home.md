@@ -5,9 +5,8 @@ The article (link) describes the goals of the research and how you can use the c
 Analyzed stuff:
 - [Nginx](nginx)
 - [Apache](apache)
-- [Haproxy](haproxy)
+- [Haproxy/Nuster](Haproxy-and-Nuster)
 - [Varnish](varnish)
-- [Nuster](nuster)
 
 Additional:
 - [Browsers](browsers)
