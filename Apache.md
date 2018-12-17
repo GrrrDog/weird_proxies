@@ -3,11 +3,17 @@
 
 ## Basics
 - case-sensitive for verb  (`get != GET`)
-  - insensitive with php (?)
+  - insensitive with PHP
 - treats // as a directory (`/images/1.jpg/..//../2.jpg` -> `/images/2.jpg`)
 - doesn't allow in path: `# %`
 - doesn't allow `%2f` in path (default config: `AllowEncodedSlashes Off`)
   - %2f is always 404 (`/%2f/../index.php/` or `/index.php/%2f`)
+- can be the forward-proxy
+- support this request (points to root) `GET ? HTTP/1.1`
+- cares about cache check headers (If-Range/Match/*) 
+  - doesn't care in case of PHP
+- If-Range + Range -> returns part of content only if If-Range correct
+- No `Accept-Ranges: bytes` in case of php
 
 ### Fingerprint
 - `Server: apache`
@@ -33,6 +39,7 @@ The specified location, which ends in a forward slash, is a prefix of the path c
   - `<LocationMatch>` ==  `<Location ~ "/(extra|special)/data"> `
   - Location with support of RegExps
   - `<LocationMatch "^/abc">` would match the request URL `/abc` but not the request URL `//abc`. The (non-regex) `<Location>` directive behaves similarly when used for proxy requests. But when (non-regex) `<Location>` is used for non-proxy requests it will implicitly match multiple slashes with a single slash. For example, if you specify `<Location "/abc/def">` and the request is to `/abc//def` then it will match.
+- FilesMatch and Files to set rules for extensions, but works for only inside current location (`<FilesMatch \.php$>` in virt host -> `/test.php` - OK,  `/anything/test.php` - no)
 
 ### ProxyPass
 - backend (URL to origin) is controllable 
