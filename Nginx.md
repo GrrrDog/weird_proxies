@@ -43,7 +43,7 @@ then forward encoded value
 - doesn't forward headers with space symbols in name (` AnyHeader:` or `AnyHeader :`)
 - no additional headers to backend
 
-### Caching
+## Caching
 - Nginx only caches GET and HEAD requests
 - It respects the Cache-Control and Expires headers from origin server 
   - It does not cache responses with Cache-Control set to Private, No-Cache, or No-Store or with Set-Cookie in the response header.  
