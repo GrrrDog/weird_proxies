@@ -1,0 +1,3 @@
+# Weird proxies
+
+[Wiki](wiki)
