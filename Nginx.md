@@ -1,14 +1,25 @@
 - https://www.nginx.com/
-- Tested version:
+- Tested version: 1.15.3
 
 ## Basics
-- case-sensitive for verb (get != GET)
+- case-sensitive for verb (400 error)
 - doesn't treat // as a directory (/images/1.jpg/..//../1.jpg -> /1.jpg)
-- doesn't allow in the path: `%00 0x00`
+- doesn't allow in the path: `%00 0x00 %`
 - doesn't allow `%2f` as the first slash
+- doesn't normalize /..
 
 ## Fingerprint
 - `Server: nginx`
+- 400
+```
+<html>
+<head><title>400 Bad Request</title></head>
+<body bgcolor="white">
+<center><h1>400 Bad Request</h1></center>
+<hr><center>nginx/1.15.3</center>
+</body>
+</html>
+```
 
 ## Absolute-URI
 - supports Absolute-URI with higher priority under host header
@@ -30,10 +41,14 @@ https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-
   - cut off #fragment
   - doesn't normalize /..
   - // -> /
-- if trailing slash is in proxy_pass, it sends processed request
-  - doesn't encode `' " < > /`
-  - doesn't decode `%2f` to `/`, which useful for %2f..
-- if no trailing slash is in proxy_pass, it sends initial request
+- if trailing slash is in proxy_pass(`proxy_pass http://backend/`), it sends the processed request
+  - doesn't url encode ``!"$&'()*+,-./:;<=>@[\]^_`{|}~``
+    - `%2f` to `/`, which useful for %2f..
+    - `<> ' " ` - useful for xss
+  - encoded `%23 %25 %3F`, %01-20, >%7F
+- if no trailing slash is in proxy_pass (`proxy_pass http://backend`), it sends initial request
+  - ``/!"$&'()*+,-./:;<=>@[\]^_`{|}~?a#``  -> ``/!"$&'()*+,-./:;<=>@[\]^_`{|}~?a#``
+  - `%2f` -> `%2f`
 - `proxy_pass http://$host/` (with ending `/`) doesn't proxy path-part
   - `proxy_pass http://192.168.78.111:9999 -> http://192.168.78.111:9999/path_from_location/`
 - forwards raw bytes (0x01-0x20, > 0x80) in path as-is
@@ -43,6 +58,17 @@ then forward encoded value
 - doesn't allow >1 `Host` header
 - doesn't forward headers with space symbols in name (` AnyHeader:` or `AnyHeader :`)
 - no additional headers to backend
+
+## rewrite
+- similar to proxy_pass with trailing slash
+- `%0a` cuts the path
+  - `/rewrite_slash/123%0a456?a=b` -> `/rewrite_slash/123?a=b`
+```
+location  /rewrite_slash/ {
+   rewrite /rewrite_slash/(.*) /$1  break;
+   proxy_pass         http://backend:9999/;
+}
+```
 
 ## Caching
 - Nginx only caches GET and HEAD requests
