@@ -4,6 +4,7 @@
 - Tested version:
 
 ## Basics
+- case-insensitive for verb (get == GET)
 - allows any path/query values (except 0x00-0x20, >0x80): 
   - `GET !i?lala=#anything HTTP/1.1`
 - doesn't url-decode, normalize the path before applying rules
