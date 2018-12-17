@@ -1,11 +1,11 @@
 - https://httpd.apache.org/
-- Tested version: 2.4
+- Tested version: 2.4.34
 
 ## Basics
 - case-sensitive for verb  (`get != GET`)
   - insensitive with PHP
 - treats // as a directory (`/images/1.jpg/..//../2.jpg` -> `/images/2.jpg`)
-- doesn't allow in path: `# %`
+- doesn't allow in path: `# % %00`
 - doesn't allow `%2f` in path (default config: `AllowEncodedSlashes Off`)
   - %2f is always 404 (`/%2f/../index.php/` or `/index.php/%2f`)
 - can be the forward-proxy
@@ -16,7 +16,18 @@
 - No `Accept-Ranges: bytes` in case of php
 
 ### Fingerprint
-- `Server: apache`
+- `Server: Apache`
+- 400 error
+```
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>400 Bad Request</title>
+</head><body>
+<h1>Bad Request</h1>
+<p>Your browser sent a request that this server could not understand.<br />
+</p>
+</body></html>
+```
 
 ### Absolute-URI
 - supports Absolute-URI with higher priority under host header
@@ -42,15 +53,19 @@ The specified location, which ends in a forward slash, is a prefix of the path c
 - FilesMatch and Files to set rules for extensions, but works for only inside current location (`<FilesMatch \.php$>` in virt host -> `/test.php` - OK,  `/anything/test.php` - no)
 
 ### ProxyPass
-- backend (URL to origin) is controllable 
+- backend (URL to origin) is controllable
+- doesn't care about the verb 
 - parses, url-decodes, normalizes, finds location, url-encodes
   - /.. - > /../
   - // -> // (except the first / symbol)
     - `//path` -> `/path`
     - `/path//` -> `/path//`
+  - ``!"$&'()*+,-./:;<=>@[\]^_`{|}~`` -> rev proxy -> ``!%22$&'()*+,-./:;%3C=%3E@%5B%5C%5D%5E_%60%7B%7C%7D~``
+  - doesn't url encode ``!$&'()*+,-.:;=@_~`` and %01-20, others
 - doesn't allow >1 `Host` header
 - doesn't forward with trailing space `AnyHeader :`
 - support line folding for headers (` Header:zzz`-> concatenate with previous header)
+- doesn't forward `Host`, sets value from ProxyPass
 - adds headers to request to origin: `X-Forwarded-For: , X-Forwarded-Host: , X-Forwarded-Server: `
   - we can send our values in request and it will be added to proxy's request (`examplezzz.com, example2.com`)
 - adds Content-Type depending on extension, if there is no CT from origin server
@@ -60,8 +75,12 @@ The specified location, which ends in a forward slash, is a prefix of the path c
 - similar to ProxyPas, but:
 - url decodes values, flag B encode them again
 - urldecodes, normalizes, then put in url and parse it
-  - `%3f` decoded to `?`, but `%3faa=1?bb=2 -> ?aa=1`
-  - inside (.*), `/lala/path/%2e%2e -> /path/..` (it's not normalized, but `/path/%2e%2e/` - is)
+  - `%0a` cuts the path
+    - `/lala/123%0a456?a=b` -> `/lala/123?a=b`
+  - from url-encoded path doesn't url-encode ``!$&'()*+,-.:;=?@[\]^_`{|}~`` + >0x7F
+    - `%3f` decoded to `?`, but `%3faa=1?bb=2 -> ?aa=1`
+    - inside (.*), `/lala/path/%2e%2e -> /path/..` (it's not normalized, but `/path/%2e%2e/` - is)
+  - ``!"$&'()*+,-./:;<=>@[\]^_`{|}~`` -> rev proxy -> ``!%22$&'()*+,-./:;%3C=%3E@%5B%5C%5D%5E_%60%7B%7C%7D~``
 ```
 <VirtualHost *:80>
   ServerName example1.com
