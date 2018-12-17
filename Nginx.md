@@ -4,6 +4,7 @@
 ## Basics
 - case-sensitive for verb (get != GET)
 - doesn't treat // as a directory (/images/1.jpg/..//../1.jpg -> /1.jpg)
+- doesn't allow in the path: `%00 0x00`
 
 ## Fingerprint
 - `Server: nginx`
