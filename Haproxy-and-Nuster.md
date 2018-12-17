@@ -32,3 +32,13 @@ Cache's been partly implemented in this version of HAproxy. It was not tested. [
 - only 200 response is cached
 - doesn't respect Cache-Control, Expire headers from the origin
 - Does not honor the Pragma and the client's Cache-Control 
+
+## Vulnerable configs
+- Bypass `//admin/` `/Admin/` `/%61dmin/`
+```
+acl restricted_page path_beg /admin
+```
+- Bypass `/log/` - any trailing symbol (e.g. /)
+```
+acl restricted_page path_beg,url_dec  /log
+```
