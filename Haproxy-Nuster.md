@@ -1,6 +1,9 @@
 - http://www.haproxy.org/
 - Tested version - 1.8
 
+- https://github.com/jiangwenyuan/nuster
+- Tested version:
+
 ## Basics
 - allows any path/query values (except 0x00-0x20, >0x80): 
   - `GET !i?lala=#anything HTTP/1.1`
@@ -22,4 +25,11 @@
 - forwards it as is
 
 ## Caching
-Cache's been partly implemented in this version of HAproxy. It was not tested. [Nuster](nuster) was tested instead
+Cache's been partly implemented in this version of HAproxy. It was not tested. [Nuster](https://github.com/jiangwenyuan/nuster) was tested instead
+
+- default key of CACHE: method.scheme.host.uri
+- default key of NoSQL: GET.scheme.host.uri
+  - `http://www.example.com/q?name=X&type=Y -> GET.http.www.example.com./q?name=X&type=Y`
+- only 200 response is cached
+- doesn't respect Cache-Control, Expire headers from the origin
+- Does not honor the Pragma and the client's Cache-Control 
