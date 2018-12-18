@@ -10,7 +10,7 @@
 
 ## Fingerprint
 - `Server: nginx`
-- 400
+- 400 error
 ```
 <html>
 <head><title>400 Bad Request</title></head>
