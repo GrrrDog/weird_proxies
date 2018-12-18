@@ -9,4 +9,4 @@ Analyzed stuff:
 - [Varnish](varnish)
 
 Additional:
-- [Browsers](browsers)
+- Browsers
