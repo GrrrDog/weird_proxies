@@ -85,6 +85,7 @@ location  /rewrite_slash/ {
 - It respects the Cache-Control and Expires headers from origin server 
   - It does not cache responses with Cache-Control set to Private, No-Cache, or No-Store or with Set-Cookie in the response header.  
 - Does not honor the Pragma and the client's Cache-Control 
+- Doesn't care about `Vary` header
 - key for cache: host header and path+query 
   - `#`- is ordinary symbol here
 
