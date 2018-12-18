@@ -1,14 +1,15 @@
 - https://varnish-cache.org/
-- Tested version: 
+- Tested version: 5.0.0 revision 99d036f
 
 ## Basics
 - backend (URL to origin) is uncontrollable 
-- case-insensitive for verb (get == GET)
+- allows any value for the verb
 - allows any path/query values (except 0x00-0x20): GET !i?lala=#anything HTTP/1.1
 - doesn't normalize, url-decode request before applying rules
 - doesn't forward `AnyHeader :` - 400
 - support line folding for headers (` Header:zzz`-> concatenate with previous header)
 - doesn't allow >1 `Host:`
+- forwards `Host:` header
 - adds `X-Forwarded-For:` to req to the origin server 
     - we can send our values in request and it will be added to proxy's request (`examplezzz.com, example2.com`)
 - req includes query string (no path part)
@@ -21,6 +22,7 @@
 - `X-Varnish-Backend: ip address`
 - `X-Varnish-Esi-Method`
 - `Accept-Range: bytes`   (for all requests)
+- 400 error: `HTTP/1.1 400 Bad Request`
 
 ## Absolute-URI
 - support Absolute-URI with higher priority under host header
