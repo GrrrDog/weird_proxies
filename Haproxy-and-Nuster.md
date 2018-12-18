@@ -1,7 +1,6 @@
 - http://www.haproxy.org/
-- Tested version - 1.8
+- Tested version - 1.8.14-52e4d43
 - https://github.com/jiangwenyuan/nuster
-- Tested version:
 
 ## Basics
 - case-insensitive for verb (get == GET)
@@ -12,13 +11,25 @@
   - url_dec - url decodes (but send undecoded to origin server), but spoils path_begin
 - path_* extracts the path, which starts at the first slash and ends before the question mark 
 - allows >1 `Host:`
-- doesn't resend `AnyHeader :` - 400 error
+  - forwards all of them
+- doesn't forward `AnyHeader :` - 400 error
 - support line folding for headers (` Header:zzz`-> concatenate with previous header)
 - no additional headers to backend
 
 ## Fingerprint
 - no
 - 400 error:
+```
+<html><body><h1>400 Bad request</h1>
+Your browser sent an invalid request.
+</body></html>
+```
+- 403 error:
+```
+<html><body><h1>403 Forbidden</h1>
+Request forbidden by administrative rules.
+</body></html>
+```
 
 ## Absolute-URI
 - doesn't support Absolute-URI
