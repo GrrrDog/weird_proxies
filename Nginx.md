@@ -20,6 +20,16 @@
 </body>
 </html>
 ```
+- 403
+```
+<html>
+<head><title>403 Forbidden</title></head>
+<body bgcolor="white">
+<center><h1>403 Forbidden</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+```
 
 ## Absolute-URI
 - supports Absolute-URI with higher priority under host header
