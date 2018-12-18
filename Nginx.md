@@ -42,20 +42,20 @@ https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-
   - doesn't normalize /..
   - // -> /
 - if trailing slash is in proxy_pass(`proxy_pass http://backend/`), it sends the processed request
-  - from url-encoded path it doesn't url encode ``!"$&'()*+,-./:;<=>@[\]^_`{|}~``
+  - from all url-encoded symbols in path, it doesn't url encode ``!"$&'()*+,-./:;<=>@[\]^_`{|}~``
     - `%2f` to `/`, which useful for %2f..
     - `<> ' " ` - useful for xss
   - encoded `%23 %25 %3F`, %01-20, >%7F
 - if no trailing slash is in proxy_pass (`proxy_pass http://backend`), it sends initial request
-  - ``/!"$&'()*+,-./:;<=>@[\]^_`{|}~?a#``  -> ``/!"$&'()*+,-./:;<=>@[\]^_`{|}~?a#``
+  - ``/!"$&'()*+,-./:;<=>@[\]^_`{|}~?a#z``  -> ``/!"$&'()*+,-./:;<=>@[\]^_`{|}~?a#z``
   - `%2f` -> `%2f`
 - `proxy_pass http://$host/` (with ending `/`) doesn't proxy path-part
   - `proxy_pass http://192.168.78.111:9999 -> http://192.168.78.111:9999/path_from_location/`
 - forwards raw bytes (0x01-0x20, > 0x80) in path as-is
 - set HTTP/1.0 by default
-- `$host` - its value equals the server name in the “Host” request; `$http_host`- An unchanged "Host" request
-then forward encoded value
-- doesn't allow >1 `Host` header
+- `$host` - from the request's `Host` header ; `$http_host`- host from config (default)
+- allows >1 `Host` header
+  - forwards only the first one
 - doesn't forward headers with space symbols in name (` AnyHeader:` or `AnyHeader :`)
 - no additional headers to backend
 
