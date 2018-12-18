@@ -38,8 +38,8 @@ https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-
 ## proxy_pass
 - backend (URL to origin) is uncontrollable 
 - parses, url-decodes, normalizes, finds location
-  - cut off #fragment
-  - doesn't normalize /..
+  - cut off `#fragment`
+  - doesn't normalize `/..`
   - // -> /
 - if trailing slash is in proxy_pass(`proxy_pass http://backend/`), it sends the processed request
   - from all url-encoded symbols in path, it doesn't url encode ``!"$&'()*+,-./:;<=>@[\]^_`{|}~``
@@ -76,7 +76,7 @@ location  /rewrite_slash/ {
   - It does not cache responses with Cache-Control set to Private, No-Cache, or No-Store or with Set-Cookie in the response header.  
 - Does not honor the Pragma and the client's Cache-Control 
 - key for cache: host header and path+query 
-  - `#`- is ordinary symbol here (?)
+  - `#`- is ordinary symbol here
 
 ### Caching detections
 - X-Cache-Status: MISS - custom header which shows caching
