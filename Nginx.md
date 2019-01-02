@@ -3,10 +3,11 @@
 
 ## Basics
 - case-sensitive for verb (400 error)
-- doesn't treat // as a directory (/images/1.jpg/..//../1.jpg -> /1.jpg)
-- doesn't allow in the path: `%00 0x00 %`
+- doesn't treat // as a directory (`/images/1.jpg/..//../1.jpg` -> `/1.jpg`)
+- doesn't allow in the path: `%00 0x00 %` 
 - doesn't allow `%2f` as the first slash
-- doesn't normalize /..
+- doesn't normalize `/..`
+- doesn't allow underscore (`_`) in header name (skips)
 
 ## Fingerprint
 - `Server: nginx`
