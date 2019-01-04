@@ -7,7 +7,7 @@
 - doesn't allow in the path: `%00 0x00 %` 
 - doesn't allow `%2f` as the first slash
 - doesn't normalize `/..`
-- doesn't allow underscore (`_`) in header name (skips)
+- doesn't allow underscore (`_`) in header name (doesn't forward it)
 
 ## Fingerprint
 - `Server: nginx`
@@ -52,11 +52,11 @@ https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-
   - cut off `#fragment`
   - doesn't normalize `/..`
   - // -> /
-- if trailing slash is in proxy_pass(`proxy_pass http://backend/`), it sends the processed request
-  - from all url-encoded symbols in path, it doesn't url encode ``!"$&'()*+,-./:;<=>@[\]^_`{|}~``
+- if trailing slash is in proxy_pass(`proxy_pass http://backend/`), it forwards the processed request(path)
+  - `%01-%FF` -> it doesn't url encode special symbols ``!"$&'()*+,-./:;<=>@[\]^_`{|}~``
     - `%2f` to `/`, which useful for %2f..
     - `<> ' " ` - useful for xss
-  - encoded `%23 %25 %3F`, %01-20, >%7F
+  - `%01-%FF` -> URL encoded `%23 %25 %3F`, %01-20, >%7F
 - if no trailing slash is in proxy_pass (`proxy_pass http://backend`), it sends initial request
   - ``/!"$&'()*+,-./:;<=>@[\]^_`{|}~?a#z``  -> ``/!"$&'()*+,-./:;<=>@[\]^_`{|}~?a#z``
   - `%2f` -> `%2f`
