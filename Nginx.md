@@ -53,13 +53,12 @@ https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-
   - doesn't normalize `/..`
   - // -> /
 - if trailing slash is in proxy_pass(`proxy_pass http://backend/`), it forwards the processed request(path)
-  - `%01-%FF` -> it doesn't url encode special symbols ``!"$&'()*+,-./:;<=>@[\]^_`{|}~``
+  - `%01-%FF` in path -> ``!"$&'()*+,-./:;<=>@[\]^_`{|}~``, 0-9, a-Z, `%23 %25 %3F`, `%01-20`, =>`%7F`
     - `%2f` to `/`, which useful for %2f..
     - `<> ' " ` - useful for xss
-  - `%01-%FF` -> URL encoded `%23 %25 %3F`, %01-20, >%7F
-- if no trailing slash is in proxy_pass (`proxy_pass http://backend`), it sends initial request
+- if no trailing slash is in proxy_pass (`proxy_pass http://backend`), it forwards the initial request(path)
   - ``/!"$&'()*+,-./:;<=>@[\]^_`{|}~?a#z``  -> ``/!"$&'()*+,-./:;<=>@[\]^_`{|}~?a#z``
-  - `%2f` -> `%2f`
+  - `%01-%FF` -> `%01-%FF`
 - `proxy_pass http://$host/` (with ending `/`) doesn't proxy path-part
   - `proxy_pass http://192.168.78.111:9999 -> http://192.168.78.111:9999/path_from_location/`
 - forwards raw bytes (0x01-0x20, > 0x80) in path as-is
