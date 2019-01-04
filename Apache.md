@@ -74,7 +74,7 @@ The specified location, which ends in a forward slash, is a prefix of the path c
     - `//path` -> `/path`
     - `/path//` -> `/path//`
   - ``!"$&'()*+,-./:;<=>@[\]^_`{|}~`` -> rev proxy -> ``!%22$&'()*+,-./:;%3C=%3E@%5B%5C%5D%5E_%60%7B%7C%7D~``
-  - doesn't url encode ``!$&'()*+,-.:;=@_~`` and %01-20, others
+  - `%01-%FF` in path -> ``!$&'()*+,-.:;=@_~``, 0-9, a-Z, others are URL-encoded
 - doesn't allow >1 `Host` header
 - doesn't forward with trailing space `AnyHeader :`
 - support line folding for headers (` Header:zzz`-> concatenate with previous header)
@@ -86,11 +86,11 @@ The specified location, which ends in a forward slash, is a prefix of the path c
 ### Rewrite
 - flags https://httpd.apache.org/docs/2.4/rewrite/flags.html
 - similar to ProxyPas, but:
-- url decodes values, flag B encode them again
-- urldecodes, normalizes, then put in url and parse it
+- url decodes values, flag B encodes them again
+- url decodes, normalizes, then put in url and parse it
   - `%0a` cuts the path
     - `/lala/123%0a456?a=b` -> `/lala/123?a=b`
-  - from url-encoded path doesn't url-encode ``!$&'()*+,-.:;=?@[\]^_`{|}~`` + >0x7F
+  -  `%01-%FF` in path -> ``!$&'()*+,-.:;=?@[\]^_`{|}~``, a-Z, 0-9, >0x7F, others are URL encoded
     - `%3f` decoded to `?`, but `%3faa=1?bb=2 -> ?aa=1`
     - inside (.*), `/lala/path/%2e%2e -> /path/..` (it's not normalized, but `/path/%2e%2e/` - is)
   - ``!"$&'()*+,-./:;<=>@[\]^_`{|}~`` -> rev proxy -> ``!%22$&'()*+,-./:;%3C=%3E@%5B%5C%5D%5E_%60%7B%7C%7D~``
