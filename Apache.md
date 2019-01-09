@@ -43,9 +43,9 @@ on this server.<br />
 ```
 
 ### Absolute-URI
-- supports Absolute-URI with higher priority under host header
+- supports Absolute-URI with higher priority than host header
 - any scheme in Absolute-URI
-- doesn't like @ in Absolute-URI
+- doesn't like @ in Absolute-URI (400 error)
 
 ## Location match rules (the same works for ProxyPass)
 http://httpd.apache.org/docs/current/mod/core.html#location
