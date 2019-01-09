@@ -6,7 +6,7 @@
 - doesn't treat // as a directory (`/images/1.jpg/..//../1.jpg` -> `/1.jpg`)
 - doesn't allow in the path: `%00 0x00 %` 
 - doesn't allow `%2f` as the first slash
-- doesn't normalize `/..`
+- doesn't path normalize `/..`
 - doesn't allow underscore (`_`) in header name (doesn't forward it)
 
 ## Fingerprint
@@ -35,7 +35,7 @@
 ## Absolute-URI
 - supports Absolute-URI with higher priority under host header
 - any scheme in Absolute-URI
-- doesn't like @ in Absolute-URI
+- doesn't allow `@` in Absolute-URI (400 error)
 
 ## location match rules
 - (none): If no modifiers are present, the location is interpreted as a prefix match. This means that the location given will be matched against the beginning of the request URI to determine a match.
@@ -100,13 +100,18 @@ location  /rewrite_slash/ {
 
 
 ## Vulnerable configs
-- one level traversal `/host_noslash_path../somthing/` -> 
+- one level traversal 
+  - `/host_noslash_path../something/` -> `/lala/../something/`
 ```
 location /host_noslash_path {
     proxy_pass http://192.168.78.111:9999/lala/;
 }
 ```
-- no first / (absolute uri?) `/without/slash/here` -> `GET without/slash/here HTTP/1.1`
+- no first / 
+  - `/without/slash/here` -> `GET without/slash/here HTTP/1.1`
+  - (absolute uri?)
 ```
 rewrite /(.*) $1  break;
 ```
+- other examples
+  - https://github.com/yandex/gixy
