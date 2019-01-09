@@ -6,10 +6,10 @@
 - case-insensitive for verb (get == GET)
 - allows any path/query values (except 0x00-0x20, >0x80): 
   - `GET !i?lala=#anything HTTP/1.1`
-- doesn't url-decode, normalize the path before applying rules
+- doesn't url-decode and normalize the path before applying rules
 - support converters:
-  - url_dec - url decodes (but send undecoded to origin server), but spoils path_begin
-- path_* extracts the path, which starts at the first slash and ends before the question mark 
+  - url_dec - url decodes (but sends undecoded to origin server), but spoils path_begin
+- path_* extracts the path, which starts at the first slash and ends before the first question mark 
 - allows >1 `Host:`
   - forwards all of them
 - doesn't forward `AnyHeader :` - 400 error
