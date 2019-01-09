@@ -77,7 +77,7 @@ The specified location, which ends in a forward slash, is a prefix of the path c
   - `%01-%FF` in path -> ``!$&'()*+,-.:;=@_~``, 0-9, a-Z, others are URL-encoded
 - doesn't allow >1 `Host` header
 - doesn't forward with trailing space `AnyHeader :`
-- support line folding for headers (` Header:zzz`-> concatenate with previous header)
+- support line folding for headers (` Header:zzz`-> it is concatenated with the previous header)
 - doesn't forward `Host`, sets value from ProxyPass
 - adds headers to request to origin: `X-Forwarded-For: , X-Forwarded-Host: , X-Forwarded-Server: `
   - we can send our values in request and it will be added to proxy's request (`examplezzz.com, example2.com`)
