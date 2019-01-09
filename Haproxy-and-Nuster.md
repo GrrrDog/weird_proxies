@@ -17,7 +17,7 @@
 - no additional headers to backend
 
 ## Fingerprint
-- no
+- no special headers
 - 400 error:
 ```
 <html><body><h1>400 Bad request</h1>
@@ -32,8 +32,9 @@ Request forbidden by administrative rules.
 ```
 
 ## Absolute-URI
-- doesn't support Absolute-URI
+- doesn't support (parse) Absolute-URI
 - forwards it as is
+  - `GET http://backend.com/q?name=X&type=Y HTTP/1.1` -> `GET http://backend.com/q?name=X&type=Y HTTP/1.1`
 
 ## Caching
 Cache's been partly implemented in this version of HAproxy. It was not tested. [Nuster](https://github.com/jiangwenyuan/nuster) was tested instead
