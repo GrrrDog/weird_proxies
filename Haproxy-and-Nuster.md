@@ -3,7 +3,7 @@
 - https://github.com/jiangwenyuan/nuster
 
 ## Basics
-- case-insensitive for verb (get == GET)
+- case-insensitive for verb
 - allows any path/query values (except 0x00-0x20, >0x80): 
   - `GET !i?lala=#anything HTTP/1.1`
 - doesn't url-decode and normalize the path before applying rules
