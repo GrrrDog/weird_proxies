@@ -66,6 +66,7 @@ https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-
 - `$host` - from the request's `Host` header ; `$http_host`- host from config (default)
 - allows >1 `Host` header
   - forwards only the first one
+  - in case of `fastcgi_pass` or `uwsgi_pass`, the app gets the second `Host` header
 - doesn't forward headers with space symbols in name (` AnyHeader:` or `AnyHeader :`)
 - no additional headers to backend
 
