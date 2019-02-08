@@ -8,6 +8,7 @@
 - doesn't allow `%2f` as the first slash
 - doesn't path normalize `/..`
 - doesn't allow underscore (`_`) in header name (doesn't forward it)
+- doesn't allow 0x0d in header value
 
 ## Fingerprint
 - `Server: nginx`
