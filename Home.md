@@ -7,6 +7,7 @@ Analyzed stuff:
 - [Apache](apache)
 - [Haproxy/Nuster](Haproxy-and-Nuster)
 - [Varnish](varnish)
+- [Traefik](traefik)
 
 Additional:
 - Browsers
