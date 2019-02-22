@@ -31,6 +31,7 @@
 ## Caching
 - it caches GET and HEAD requests
 - key for cache: host header and uri 
+- status codes cached: 200, 203, 300, 301, 302, 307, 404, 410
 - doesn't cache reqs with cookie(!) or Authorization header, or Set-Cookie (default)
   - often practice to cut all cookie headers before sending to origin
 - It respects the Cache-Control and Expires headers from origin server (depending on version)
