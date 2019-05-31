@@ -15,6 +15,7 @@
 - If-Range + Range -> returns part of content only if If-Range correct
 - No `Accept-Ranges: bytes` in case of php
 - doesn't allow underscore (`_`) in headers (skips)
+- It supports `Max-Forwards` header and returns an error when `Max-Forwards has reached zero`
 
 ### Fingerprint
 - `Server: Apache`
