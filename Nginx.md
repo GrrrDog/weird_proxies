@@ -117,3 +117,13 @@ rewrite /(.*) $1  break;
 ```
 - other examples
   - https://github.com/yandex/gixy
+  
+## Port in redirect
+- port_in_redirect is turned on by default
+- when non-default http port is used in listen argument - ```listen 127.0.0.1:12345```
+- happens when URL is without trailing slash
+- http://example.com/ -> http://example.com/ --> OK
+- http://example.com/js -> http://example.com:12345/js --> BAD
+- http://example.com/js/ -> http://example.com/js/ --> OK
+- observed in setup where nginx web server is behind another reverse proxy that translates port 80 to internal 12345
+- recommendation: ```port_in_redirect off;```
