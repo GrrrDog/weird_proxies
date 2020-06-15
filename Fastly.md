@@ -15,18 +15,6 @@
 - headers (req.header) case-insensitive
 - req includes query string (no other properties)
   - `req.url ~ "\.jpg$"` == `?random=.jpg`
-
-## Fingerprint
-- fingerprint default: 
-```
-    Via: 1.1 varnish
-    Age: 0
-    X-Served-By: cache-fra19143-FRA
-    X-Cache: MISS
-    X-Cache-Hits: 0
-    X-Timer: S1542130425.787081,VS0,VE95
-    X-Fastly-Request-ID: ceb40030fac03f7a0c16e7d095002a350bef0059 (sometimes)
-```
 - adds headers to req to the origin server (by default)
 ```
     Fastly-Orig-Accept-Encoding: gzip, deflate
@@ -47,6 +35,18 @@
 ```
     GET httpa://localhost/ HTTP/1.1
     Host: valid.com
+```
+
+## Fingerprint
+- fingerprint default: 
+```
+    Via: 1.1 varnish
+    Age: 0
+    X-Served-By: cache-fra19143-FRA
+    X-Cache: MISS
+    X-Cache-Hits: 0
+    X-Timer: S1542130425.787081,VS0,VE95
+    X-Fastly-Request-ID: ceb40030fac03f7a0c16e7d095002a350bef0059 (sometimes)
 ```
 
 ## Caching
