@@ -10,6 +10,7 @@ Analyzed stuff:
 - [Apache](Apache.md)
 - [Haproxy/Nuster](Haproxy-and-Nuster.md)
 - [Varnish](Varnish.md)
+- [Traefik](Traefik.md)
 - [AWS](AWS.md)
 - [Cloudflare](Cloudflare.md)
 - [Stackpath](Stackpath.md)
