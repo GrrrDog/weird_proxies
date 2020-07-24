@@ -9,12 +9,14 @@
 - doesn't allow `%2f` in path (default config: `AllowEncodedSlashes Off`)
   - %2f is always 404 (`/%2f/../index.php/` or `/index.php/%2f`)
 - can be the forward-proxy
+- concatinate header values in case of mulitple headers with the same name (PHP)
+  - doesn't allow >1 `Host` header
 - support this request (points to root) `GET ? HTTP/1.1`
 - cares about cache check headers (If-Range/Match/*) 
   - doesn't care in case of PHP
 - If-Range + Range -> returns part of content only if If-Range correct
 - No `Accept-Ranges: bytes` in case of php
-- doesn't allow underscore (`_`) in headers (skips)
+- doesn't allow underscore (skips) when pass headers in env (PHP)
 - It supports `Max-Forwards` header and returns an error when `Max-Forwards has reached zero`
 
 ### Fingerprint
@@ -43,7 +45,7 @@ on this server.<br />
 </body></html>
 ```
 
-### Absolute-URI
+## Absolute-URI
 - supports Absolute-URI with higher priority than host header
 - any scheme in Absolute-URI
 - doesn't like @ in Absolute-URI (400 error)
@@ -76,10 +78,13 @@ The specified location, which ends in a forward slash, is a prefix of the path c
     - `/path//` -> `/path//`
   - ``!"$&'()*+,-./:;<=>@[\]^_`{|}~`` -> rev proxy -> ``!%22$&'()*+,-./:;%3C=%3E@%5B%5C%5D%5E_%60%7B%7C%7D~``
   - `%01-%FF` in path -> ``!$&'()*+,-.:;=@_~``, 0-9, a-Z, others are URL-encoded
-- doesn't allow >1 `Host` header
+- forwards the last header in case of mulitple headers with the same name
+  - doesn't allow >1 `Host` header
 - doesn't forward with trailing space `AnyHeader :`
 - support line folding for headers (` Header:zzz`-> it is concatenated with the previous header)
 - doesn't forward `Host`, sets value from ProxyPass
+- allow (forwards) underscore (`_`) in headers 
+- delete headers listed in `Connection` header (`Connection: Accept-Language`)
 - adds headers to request to origin: `X-Forwarded-For: , X-Forwarded-Host: , X-Forwarded-Server: `
   - we can send our values in request and it will be added to proxy's request (`examplezzz.com, example2.com`)
 - adds Content-Type depending on extension, if there is no CT from origin server
@@ -111,6 +116,12 @@ The specified location, which ends in a forward slash, is a prefix of the path c
 RewriteEngine On
 RewriteCond %{REQUEST_URI} ^/neighborhood/[^/]+/feed$ [NC]
 RewriteRule ^.*$ - [F,L]
+```
+- misrouting due to lack of normalization in the query
+```
+RewriteEngine On
+RewriteCond %{QUERY_STRING} ^id=(.*)$
+RewriteRule page\.php$ http://192.168.78.111:9999/%1.php [P,L]
 ```
 
 - No ending slash SSRF (incorrect config)
