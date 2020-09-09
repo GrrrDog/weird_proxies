@@ -4,7 +4,7 @@
 ## Basics
 - case-sensitive for verb (400 error)
 - doesn't treat // as a directory (`/images/1.jpg/..//../1.jpg` -> `/1.jpg`)
-- doesn't allow in the path: `%00 0x00 %` 
+- doesn't allow in the path: `%00 0x00 %`
 - doesn't allow `%2f` as the first slash
 - doesn't path normalize `/..`
 - doesn't allow underscore (`_`) in header name (doesn't forward it)
@@ -48,7 +48,7 @@
 https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms
 
 ## proxy_pass
-- backend (URL to origin) is uncontrollable 
+- backend (URL to origin) is uncontrollable
 - parses, url-decodes, normalizes, finds location
   - cut off `#fragment`
   - doesn't normalize `/..`
@@ -84,11 +84,11 @@ location  /rewrite_slash/ {
 
 ## Caching
 - Nginx only caches GET and HEAD requests
-- It respects the Cache-Control and Expires headers from origin server 
+- It respects the Cache-Control and Expires headers from origin server
   - It does not cache responses with Cache-Control set to Private, No-Cache, or No-Store or with Set-Cookie in the response header.  
 - Does not honor the `Pragma` and the client's `Cache-Control`
 - Doesn't care about `Vary` header
-- key for cache: host header and path+query 
+- key for cache: host header and path+query
   - `#`- is ordinary symbol here
 
 ### Caching detections
@@ -96,20 +96,20 @@ location  /rewrite_slash/ {
 - If caching is enabled, the header fields “If-Modified-Since”, “If-Unmodified-Since”, “If-None-Match”, “If-Match”, “Range”, and “If-Range” from the original request are not passed to the origin server.
 - doesn't care If-Match for uncached content
 - cares If-Match for cached content:
-  - W/"0815" - returns 412 Precondition Failed 
+  - W/"0815" - returns 412 Precondition Failed
   - If-Match: * returns body
 - doesn't care Range headers
 
 
 ## Vulnerable configs
-- one level traversal 
+- one level traversal
   - `/host_noslash_path../something/` -> `/lala/../something/`
 ```
 location /host_noslash_path {
     proxy_pass http://192.168.78.111:9999/lala/;
 }
 ```
-- no first / 
+- no first /
   - `/without/slash/here` -> `GET without/slash/here HTTP/1.1`
   - (absolute uri?)
 ```
@@ -117,7 +117,7 @@ rewrite /(.*) $1  break;
 ```
 - other examples
   - https://github.com/yandex/gixy
-  
+
 ## Port in redirect
 - port_in_redirect is turned on by default
 - when non-default http port is used in listen argument - ```listen 127.0.0.1:12345```
@@ -127,3 +127,10 @@ rewrite /(.*) $1  break;
 - http://example.com/js/ -> http://example.com/js/ --> OK
 - observed in setup where nginx web server is behind another reverse proxy that translates port 80 to internal 12345
 - recommendation: ```port_in_redirect off;```
+
+## [Hop-by-hop headers](https://tools.ietf.org/html/rfc2616#section-13.5.1)
+
+- Doesn't remove custom hop-by-hop headers listed in `Connection` header.
+- Passes value of `Connection` header as is when acting as a proxy.
+
+This section is based on [Abusing HTTP hop-by-hop request headers](https://nathandavison.com/blog/abusing-http-hop-by-hop-request-headers).
