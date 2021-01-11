@@ -39,5 +39,7 @@ Related articles/white papers/presentations:
 - [CPDoS: Cache Poisoned Denial of Service](https://cpdos.org/)
 - [The Case of the Missing Cache Keys](https://enumerated.wordpress.com/2020/08/05/the-case-of-the-missing-cache-keys/)
 - [Responsible denial of service with web cache poisoning](https://portswigger.net/research/responsible-denial-of-service-with-web-cache-poisoning)
+- [Cache Poisoning Denial-of-Service Attack Techniques](https://www.acunetix.com/blog/web-security-zone/cache-poisoning-dos-attack-techniques/)
+- [Cache-Key Normalization DoS](https://iustin24.github.io/Cache-Key-Normalization-Denial-of-Service/)
 - [Web Cache Deception Attack](https://omergil.blogspot.com/2017/02/web-cache-deception-attack.html)
 - [Cached and Confused: Web Cache Deception in the Wild](https://sajjadium.github.io/files/usenixsec2020wcd_paper.pdf)
