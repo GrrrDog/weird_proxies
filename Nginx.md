@@ -118,6 +118,17 @@ rewrite /(.*) $1  break;
 - other examples
   - https://github.com/yandex/gixy
 
+### Dangerous whitespaces
+- Nginx allows whitespace symbols in path part
+- it forwards them unprocessed
+- some backend servers can interpret such a path incorrectly
+- Example Nginx(no trailing slash) + gunicorn:
+```
+location /public/path { proxy_pass http://backend_gunicorn;}
+```
+  - request to Nginx `GET /private/path/<TAB>HTTP/1.1/../../../../public/path HTTP/1.1`
+  - gunicorn reads until first whitespace with `HTTP/1.1`. It sees `GET /private/path/<TAB>HTTP/1.1` and skips rest of the path
+
 ## Port in redirect
 - port_in_redirect is turned on by default
 - when non-default http port is used in listen argument - ```listen 127.0.0.1:12345```
