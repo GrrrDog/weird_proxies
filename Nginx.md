@@ -145,3 +145,57 @@ location /public/path { proxy_pass http://backend_gunicorn;}
 - Passes value of `Connection` header as is when acting as a proxy.
 
 This section is based on [Abusing HTTP hop-by-hop request headers](https://nathandavison.com/blog/abusing-http-hop-by-hop-request-headers).
+
+# HTTP/2
+- Tested version - 1.18
+- **Header Names:**
+
+    Allowed:`-`
+
+    Restricted:`\x00 \x0a \x0d :`   (protocol error)
+
+    It removes (doesn't proxy) header with all other symbols
+
+    Only in lower case
+
+- **Header Value:**
+
+    Restricted(\x00-\x20):`\x00 \x0a \x0d`
+
+    Allowed:``[]{}:;.,<>?|"\'/_`=+~!@#$%^&*()-``
+
+- **Verb:**
+
+    Uppercase only
+
+    Allowed:`_-`
+
+    Restricted(\x00-\x20):`\x00-\x20` (`\x00 \x0a \x0d` - protocol error)
+
+- **Path:**
+
+    Must start with `/`
+
+    Allowed:``[]{}:;.,<>?|"\'/_`=+~!@#$%^&*()-``
+
+    Restricted(\x00-\x20): `\x00 \x0a \x0d` (protocol error)
+
+    Doesn't support Absolute URI
+
+- **Authority:**
+
+    Allowed:``[]{};.,<>?|"'\_`=+~!@#$%^&*()-`` (without `/`)
+
+    Cannot start with `:`
+
+    Restricted(\x00-\x20):`\x00-\x20` (`\x00 \x0a \x0d` - protocol error)
+
+    With `host` returns 400
+
+- **Scheme:**
+
+    Allowed:`+.:` 
+
+    Restricted(\x00-\x20):`\x00-\x20` (`\x00 \x0a \x0d` - protocol error)
+
+    Doesn't proxy`scheme`
