@@ -1,0 +1,79 @@
+version: '3'
+services:
+    haproxy:
+        image: haproxy:2.4.0
+        # image: haproxytech/haproxy-debian:2.4.0
+        ports:
+            - "8001:443"
+            # - "8081:5555"
+        volumes:
+            - ./configs/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+            - ./configs/labiotls.pem:/tmp/labiotls.pem
+    nginx:
+        image: nginx:1.18
+        ports:
+            - "8002:443"
+        volumes:
+            - ./configs/nginx.conf:/etc/nginx/conf.d/vhost.conf
+            - ./configs/labiotls.pem:/tmp/labiotls.pem
+    nuster:
+        image: nuster/nuster:latest
+        ports:
+            - "8003:443"
+        volumes:
+            - ./configs/nuster.cfg:/etc/nuster/nuster.cfg
+            - ./configs/labiotls.pem:/tmp/labiotls.pem
+    caddy:
+        image: caddy:2.4.0
+        ports:
+            - "8004:8443"
+            - "8084:2019"
+        volumes:
+            - ./configs/Caddyfile:/etc/caddy/Caddyfile
+    traefik1:
+        image: traefik:1.7.30
+        command: --api --file /etc/traefik/traefik.toml
+        ports:
+            - "8005:443"
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock 
+            - ./configs/traefik1.toml:/etc/traefik/traefik.toml 
+            - ./configs/labiotls.pem:/tmp/labiotls.pem
+    traefik2:
+        image: traefik:2.4.8
+        command: --configFile=/etc/traefik/traefik.yml
+        ports:
+            - "8006:443"
+            - "8086:80"
+            - "8600:8080"
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./configs/traefik2.toml:/etc/traefik/traefik.toml
+            - ./configs/services.toml:/etc/traefik/services.toml 
+            - ./configs/labiotls.pem:/tmp/labiotls.pem
+    envoy:
+        image: envoyproxy/envoy:v1.18.3
+        ports:
+            - "8007:443"
+            - "8700:9090"
+        volumes:
+            - ./configs/envoy.yaml:/etc/envoy/envoy.yaml
+            - ./configs/labiotls.pem:/tmp/labiotls.pem
+    apachephp:
+        image: php:apache
+        ports:
+            - "9990:80"
+        volumes:
+            - ./code/:/var/www/html/
+    guni:
+        build: gunicorn/.
+        ports:
+            - "9991:8000"
+    raw:
+        build: raw/.
+        ports:
+            - "9999:9999"
+networks:
+  default:
+    external:
+      name: labs_network

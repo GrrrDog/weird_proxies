@@ -1,0 +1,18 @@
+defaultEntryPoints = ["https"]
+
+[entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+      certFile = "/tmp/labiotls.pem"
+      keyFile = "/tmp/labiotls.pem"
+
+[backends]
+  [backends.backend1]
+    [backends.backend1.servers.server1]
+       url = "http://raw:9999"
+
+[frontends]
+  [frontends.frontend2]
+      backend = "backend1"
+      

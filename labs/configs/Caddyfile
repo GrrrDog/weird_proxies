@@ -1,0 +1,123 @@
+{
+  http_port 8888
+  https_port 8443
+  admin 0.0.0.0:2019
+  auto_https disable_redirects
+#   debug
+}
+
+
+http://lab.io, https://lab.io {
+    # :8080
+    tls internal
+    
+    # Set this path to your site's directory.
+    root * /usr/share/caddy
+
+    respond /values/* 200 {
+        body "
+lab.io
+http.request.host	{http.request.host}
+http.request.hostport 	{http.request.hostport}
+http.request.port 	{http.request.port}
+http.request.header.test 	{http.request.header.test}
+method 	{http.request.method}
+http.request.uri.path   {http.request.uri.path}
+http.request.uri.path.dir 	{http.request.uri.path.dir}
+http.request.uri.path.file 	{http.request.uri.path.file}
+http.request.uri 	{http.request.uri}
+query 	{http.request.uri.query}
+remote 	{http.request.remote}
+remote_host 	{http.request.remote.host}
+remote_port 	{http.request.remote.port}
+scheme 	{http.request.scheme}
+The request's original method   {http.request.orig_method} 
+The request's original directory    {http.request.orig_uri.path.dir}
+The request's original filename {http.request.orig_uri.path.file}
+The request's original path     {http.request.orig_uri.path}
+The request's original query string (without ?)     {http.request.orig_uri.query}
+The request's original URI  {http.request.orig_uri} 	
+tls_cipher} 	{http.request.tls.cipher_suite}
+tls_version} 	{http.request.tls.version}
+tls_client_fingerprint} 	{http.request.tls.client.fingerprint}
+tls_client_issuer} 	{http.request.tls.client.issuer}
+tls_client_serial} 	{http.request.tls.client.serial}
+tls_client_subject} 	{http.request.tls.client.subject}
+tls_client_certificate_pem} 	{http.request.tls.client.certificate_pem}
+       "
+        close
+    }
+
+
+    respond /secret/* "Access denied" 403 {
+	close
+    }
+
+   route /phpcgigood/* {
+       
+       @phpFiles path *.php
+        reverse_proxy @phpFiles 192.168.78.111:9000 {
+            #uri strip_prefix /phpcgigood/
+            transport fastcgi {
+                split .php
+            }
+        }
+    }
+
+   route /phpcgifake/* {
+       @phpFiles path *.php
+        reverse_proxy @phpFiles raw:9999 {
+            transport fastcgi {
+                split .php
+            }
+        }
+        # php_fastcgi /blog/* 
+
+    }
+    
+    route /prefix/* {
+        uri strip_prefix /prefix
+        reverse_proxy raw:9999
+    }
+
+    # test if we can proxy /prefix3/http://anyhost/
+    route /prefix3/* {
+        uri strip_prefix /prefix3/
+        reverse_proxy raw:9999
+    }
+
+    route /rewrite/* {
+        rewrite * /index.php?{query}&p={path}
+        reverse_proxy raw:9999
+    }
+
+	reverse_proxy /proxy/* raw:9999 {
+		header_up ZHost {http.reverse_proxy.upstream.hostport}
+	} 
+
+    # reverse_proxy raw:9999 {
+    #  	header_up ZHost {http.reverse_proxy.upstream.hostport}
+    # }
+
+    @notblacklisted {
+        not {
+            path /blocked* 
+        }
+    }
+    reverse_proxy  @notblacklisted raw:9999 {
+      	header_up Host {host}
+    }
+
+    reverse_proxy /prefix2/*  raw:9999 {
+    #request_header -Referer
+    #header_up Host {http.reverse_proxy.upstream.hostport}
+    #  header_up X-User Test 
+    }
+}
+
+#@websockets {
+#	header Connection *Upgrade*
+#header Upgrade    websocket
+#}
+#reverse_proxy @websockets raw:9999
+

@@ -1,0 +1,31 @@
+[http]
+  [http.routers]
+    [http.routers.router0]
+      entryPoints = ["web-secure"]
+      service = "service-foo"
+      rule = "Host(`lab.io`)"
+      tls=true
+    [http.routers.router1]
+      entryPoints = ["web"]
+      service = "service-foo"
+      rule = "Host(`lab.io`)"
+  [http.services]
+    [http.services.service-foo]
+      [http.services.service-foo.loadBalancer]
+        [[http.services.service-foo.loadBalancer.servers]]
+          url = "http://raw:9999/"
+
+[[tls.certificates]] 
+  certFile = "/tmp/labiotls.pem"
+  keyFile = "/tmp/labiotls.pem"
+  stores = ["default"]
+
+[tls.stores]
+  [tls.stores.default]
+    [tls.stores.default.defaultCertificate] 
+      certFile = "/tmp/labiotls.pem"
+      keyFile = "/tmp/labiotls.pem"
+
+[tls.options]
+  [tls.options.default]
+    sniStrict = false

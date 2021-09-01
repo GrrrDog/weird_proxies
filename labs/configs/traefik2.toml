@@ -1,0 +1,22 @@
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+  [entryPoints.web-secure]
+    address = ":443"
+
+[api]
+  dashboard = true
+  insecure = true
+
+[log]
+  level = "INFO"
+
+# [accessLog]
+
+[providers.docker]
+  endpoint = "unix:///var/run/docker.sock"
+[providers.file]
+  filename = "/etc/traefik/services.toml"
+  watch = true
+
+
