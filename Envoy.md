@@ -92,3 +92,53 @@ https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_
           patterns:
           - exact: x-current-user
 ```
+
+# HTTP/2
+- Tested version - 1.18.3
+
+- **Header Names:**
+
+    Allowed:``-|^.'_~`+!#$%&*``
+
+    Restricted(from \x00-\x20):`\x00-\x20` 
+
+    Only in lower case
+
+- **Header Value:**
+
+    Restricted(\x00-\x20):`\x00 \x0a \x0d`
+
+    Allowed:``[]{}:;.,<>?|"\'/_`=+~!@#$%^&*()-``
+
+- **Verb:**
+
+    Allowed:``[]{};.,<>?|"'\/_`=+~!@#$%^&*()-``
+
+    Restricted(\x00-\x20): except`\x09 \x20`
+
+- **Path:**
+
+    Must start with `/`
+
+    Allowed:``[]{}:;.,<>?|"\'/_`=+~!@#$%^&*()-``
+
+    Restricted(\x00-\x20): except`\x09 \x20` (encoded)
+
+    doesn't support **Absolute URI**
+
+- **Authority:**
+
+    Allowed:``[]:;.,'_=+~!@$%&*()-`` 
+
+    Restricted(\x00-\x20):`\x00-\x20`
+
+    `host` is allowed, it's concat with `:authority` 
+
+    - `:authority:lab.io` `host:evilhost.com` → `host: lab.io,evilhost.com`
+- **Scheme:**
+
+    Allowed:``+.-`` 
+
+    Restricted(\x00-\x20):`\x00-\x20`
+
+    Doesn't proxy`scheme`
