@@ -100,3 +100,50 @@ route /prefix3/* {
     reverse_proxy 192.168.78.111:9999
     }
 ```
+
+# HTTP/2
+- Tested version - 2.4.0
+- **Header Names:**
+
+    Allowed:``-.|'^_`+~!#$%^&*``
+
+    Restricted(from \x00-\x20):`\x00-\x20` 
+
+    Only in lower case
+
+- **Header Value:**
+
+    Allowed(\x00-\x20):`\x09 \x20`
+
+    Allowed:``[]{}:;.,<>?|"\'/^_`=+~!@#$%^&*()-``
+
+- **Verb:**
+
+    Allowed:``-.|'^_`+~!#$%^&*``
+
+    Restricted(\x00-\x20):`\x00-\x20`
+
+    Any case allowed
+
+- **Path:**
+
+    Must start with `/`
+
+    Allowed:``[]{}:;.,<>?|"\'\\/^_`=+~!@#$%^&*()-`` 
+
+    Restricted(\x00-\x20): `\x00-\x19` (`\x20` → `%20`)
+
+    supports **Absolute URI** http://evilhost.com/pathtest →`GET /pathtest HTTP/1.1`
+
+    doesn't rewrite `Host`
+- **Authority:**
+
+    Allowed:``[]{};.,<>?|"'\/_`=+~!@#$%^&*()-``
+
+    Restricted(\x00-\x20): except`\x09 \x20`
+
+    `host` is allowed, but doesn't rewrite `:authority`/`Host`
+
+- **Scheme:**
+
+    Strict list of values: `http` `https` (more?)
