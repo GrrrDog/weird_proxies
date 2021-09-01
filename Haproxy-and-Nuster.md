@@ -55,3 +55,64 @@ acl restricted_page path_beg /admin
 ```
 acl restricted_page path_beg,url_dec  /log
 ```
+
+# HTTP/2
+- Tested version - 2.4.0
+- **Header Names:**
+
+    Allowed:``-.|'^_`+~!#$%^&*``
+
+    Restricted(from \x00-\x20):`\x00-\x20` (protocol error)
+
+    Restricted(\x7F-\xFF):`\x7F-\xFF` (protocol error)
+
+    Only in lower case
+
+- **Header Value:**
+
+    Restricted(\x00-\x20):`\x00 \x0a \x0d`
+
+    Allowed:``[]{}:;.,<>?|"'\/^_`=+~!@#$%^&*()-``
+
+- **Verb:**
+
+    Allowed:``[]{}:;.,<>?|"'\/^_`=+~!@#$%^&*()-``
+
+    Restricted(\x00-\x20):`\x00 \x0a \x0d`
+
+    Any case allowed
+
+    No value allowed
+
+- **Path:**
+
+    Allowed:``[]{}:;.,<>?|"'\/^_`=+~!@#$%^&*()-``
+
+    Restricted(\x00-\x20):`\x00-\x20` (`\x00 \x0a \x0d` - protocol error)
+
+    It cuts prefix:`anything/path` → `/path`
+
+    - doesn't support Absolute URI
+- **Authority:**
+
+    Allowed:``[]{}:;.,<>?|"'\/^_`=+~!@#$%^&*()-`` 
+
+    Restricted(\x00-\x20):`\x00-\x20` (`\x00 \x0a \x0d` - protocol error)
+
+    `host` rewrites `:authority`
+
+    No value allowed
+
+- **Scheme:**
+
+    Allowed:``[]{}:;.,<>?|"'\/^_`=+~!@#$%^&*()-`` 
+
+    Restricted(\x00-\x20):`\x00-\x20` (`\x00 \x0a \x0d` - protocol error)
+
+    `:scheme` adds before `:authority` and `:path`:
+
+    - `:scheme:https\x3a//localhost/admin?` → `GET https://localhost/?://lab.io/testhere66idhere HTTP/1.1`
+
+    No value → `GET ://lab.io/testhere1idhere HTTP/1.1`
+
+    It applies rules after concatenation `:scheme` `:authority` `:path`
