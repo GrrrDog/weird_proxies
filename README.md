@@ -11,14 +11,15 @@ Analyzed stuff:
 - [Haproxy/Nuster](Haproxy-and-Nuster.md)
 - [Varnish](Varnish.md)
 - [Traefik](Traefik.md)
+- [Envoy](Envoy.md)
+- [Caddy](Caddy.md)
 - [AWS](AWS.md)
 - [Cloudflare](Cloudflare.md)
 - [Stackpath](Stackpath.md)
 - [Fastly](Fastly.md)
 
-
 Additional:
-- Browsers
+- [Test Labs](labs)
 
 Related articles/white papers/presentations:
 - [Reverse proxies & Inconsistency](https://speakerdeck.com/greendog/reverse-proxies-and-inconsistency)
@@ -41,6 +42,7 @@ Related articles/white papers/presentations:
 - [Cache poisoning and other dirty tricks](https://lab.wallarm.com/cache-poisoning-and-other-dirty-tricks-120468f1053f/)
 - [Practical Web Cache Poisoning](https://portswigger.net/research/practical-web-cache-poisoning)
 - [Web Cache Entanglement: Novel Pathways to Poisoning](https://i.blackhat.com/USA-20/Wednesday/us-20-Kettle-Web-Cache-Entanglement-Novel-Pathways-To-Poisoning-wp.pdf)
+- [HTTP Caching Tests](https://cache-tests.fyi/)
 - [CPDoS: Cache Poisoned Denial of Service](https://cpdos.org/)
 - [The Case of the Missing Cache Keys](https://enumerated.wordpress.com/2020/08/05/the-case-of-the-missing-cache-keys/)
 - [Responsible denial of service with web cache poisoning](https://portswigger.net/research/responsible-denial-of-service-with-web-cache-poisoning)
