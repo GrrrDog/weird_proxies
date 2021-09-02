@@ -23,6 +23,7 @@ Additional:
 
 Related articles/white papers/presentations:
 - [Reverse proxies & Inconsistency](https://speakerdeck.com/greendog/reverse-proxies-and-inconsistency)
+- [Weird proxies/2 and a bit of magic](https://speakerdeck.com/greendog/2-and-a-bit-of-magic)
 - [Attacking Secondary Contexts in Web Applications](https://docs.google.com/presentation/d/1N9Ygrpg0Z-1GFDhLMiG3jJV6B_yGqBk8tuRWO1ZicV8/mobilepresent?slide=id.p)
 - [Hacking Starbucks and Accessing Nearly 100 Million Customer Records](https://samcurry.net/hacking-starbucks/)
 - [Middleware, middleware everywhere - and lots of misconfigurations to fix](https://labs.detectify.com/2021/02/18/middleware-middleware-everywhere-and-lots-of-misconfigurations-to-fix/)
