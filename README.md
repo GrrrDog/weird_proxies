@@ -35,6 +35,7 @@ Related articles/white papers/presentations:
 - [At Home Among Strangers](https://speakerdeck.com/bo0om/at-home-among-strangers)
 - [h2c Smuggling: Request Smuggling Via HTTP/2 Cleartext (h2c)](https://labs.bishopfox.com/tech-blog/h2c-smuggling-request-smuggling-via-http/2-cleartext-h2c)
 - [H2C Smuggling in the Wild](https://blog.assetnote.io/2021/03/18/h2c-smuggling/)
+- [A story of leaking uninitialized memory from Fastly](https://medium.com/@emil.lerner/leaking-uninitialized-memory-from-fastly-83327bcbee1f)
 - [What’s wrong with WebSocket APIs? Unveiling vulnerabilities in WebSocket APIs](https://www.slideshare.net/0ang3el/whats-wrong-with-websocket-apis-unveiling-vulnerabilities-in-websocket-apis)
 - [HTTP Desync Attacks: Request Smuggling Reborn](https://portswigger.net/research/http-desync-attacks-request-smuggling-reborn)
 - [HTTP Request Smuggling via higher HTTP versions](https://www.slideshare.net/neexemil/http-request-smuggling-via-higher-http-versions)
