@@ -31,6 +31,7 @@ Related articles/white papers/presentations:
 - [Server Technologies - Reverse Proxy Bypass](https://www.contextis.com/en/blog/server-technologies-reverse-proxy-bypass)
 - [Cracking the lens: targeting HTTP's hidden attack-surface](https://portswigger.net/research/cracking-the-lens-targeting-https-hidden-attack-surface)
 - [Abusing HTTP hop-by-hop request headers](https://nathandavison.com/blog/abusing-http-hop-by-hop-request-headers)
+- [The perils of the “real” client IP](https://adam-p.ca/blog/2022/03/x-forwarded-for/)
 - [Smuggling HTTP headers through reverse proxies](http://github.security.telekom.com/2020/05/smuggling-http-headers-through-reverse-proxies.html)
 - [At Home Among Strangers](https://speakerdeck.com/bo0om/at-home-among-strangers)
 - [h2c Smuggling: Request Smuggling Via HTTP/2 Cleartext (h2c)](https://labs.bishopfox.com/tech-blog/h2c-smuggling-request-smuggling-via-http/2-cleartext-h2c)
