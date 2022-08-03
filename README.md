@@ -27,6 +27,7 @@ Related articles/white papers/presentations:
 - [Attacking Secondary Contexts in Web Applications](https://docs.google.com/presentation/d/1N9Ygrpg0Z-1GFDhLMiG3jJV6B_yGqBk8tuRWO1ZicV8/mobilepresent?slide=id.p)
 - [Hacking Starbucks and Accessing Nearly 100 Million Customer Records](https://samcurry.net/hacking-starbucks/)
 - [Middleware, middleware everywhere - and lots of misconfigurations to fix](https://labs.detectify.com/2021/02/18/middleware-middleware-everywhere-and-lots-of-misconfigurations-to-fix/)
+- [ParseThru – Exploiting HTTP Parameter Smuggling in Golang](https://www.oxeye.io/blog/golang-parameter-smuggling-attack)
 - [HTTP.ninja](https://github.com/irsdl/httpninja)
 - [Server Technologies - Reverse Proxy Bypass](https://www.contextis.com/en/blog/server-technologies-reverse-proxy-bypass)
 - [Cracking the lens: targeting HTTP's hidden attack-surface](https://portswigger.net/research/cracking-the-lens-targeting-https-hidden-attack-surface)
