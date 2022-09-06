@@ -43,6 +43,7 @@ Related articles/white papers/presentations:
 - [HTTP Request Smuggling via higher HTTP versions](https://www.slideshare.net/neexemil/http-request-smuggling-via-higher-http-versions)
 - [HTTP/2: The Sequel is Always Worse](https://portswigger.net/research/http2)
 - [Response Smuggling:Exploiting HTTP/1.1 Connections](https://media.defcon.org/DEF%20CON%2029/DEF%20CON%2029%20presentations/Martin%20Doyhenard%20-%20Response%20Smuggling-%20Pwning%20HTTP-1.1%20Connections.pdf)
+- [Browser-Powered Desync Attacks: A New Frontier in HTTP Request Smuggling](https://portswigger.net/research/browser-powered-desync-attacks)
 - [Cache poisoning and other dirty tricks](https://lab.wallarm.com/cache-poisoning-and-other-dirty-tricks-120468f1053f/)
 - [Practical Web Cache Poisoning](https://portswigger.net/research/practical-web-cache-poisoning)
 - [Web Cache Entanglement: Novel Pathways to Poisoning](https://i.blackhat.com/USA-20/Wednesday/us-20-Kettle-Web-Cache-Entanglement-Novel-Pathways-To-Poisoning-wp.pdf)
@@ -54,3 +55,4 @@ Related articles/white papers/presentations:
 - [Cache-Key Normalization DoS](https://iustin24.github.io/Cache-Key-Normalization-Denial-of-Service/)
 - [Web Cache Deception Attack](https://omergil.blogspot.com/2017/02/web-cache-deception-attack.html)
 - [Cached and Confused: Web Cache Deception in the Wild](https://sajjadium.github.io/files/usenixsec2020wcd_paper.pdf)
+- [Let's Dance in the Cache - Destabilizing Hash Table on Microsoft IIS!](https://blog.orange.tw/2022/08/lets-dance-in-the-cache-destabilizing-hash-table-on-microsoft-iis.html)
