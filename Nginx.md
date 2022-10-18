@@ -43,7 +43,7 @@
 - =: If an equal sign is used, this block will be considered a match if the request URI exactly matches the location given.
 - ~: If a tilde modifier is present, this location will be interpreted as a case-sensitive regular expression match.
 - ~*: If a tilde and asterisk modifier is used, the location block will be interpreted as a case-insensitive regular expression match.
-- ^~: If a carat and tilde modifier is present, and if this block is selected as the best non-regular expression match, regular expression matching will not take place.
+- ^~: If a caret and tilde modifier is present, and if this block is selected as the best non-regular expression match, regular expression matching will not take place.
 
 https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms
 
@@ -137,10 +137,6 @@ location /public/path { proxy_pass http://backend_gunicorn;}
 - http://example.com/js -> http://example.com:12345/js --> BAD
 - http://example.com/js/ -> http://example.com/js/ --> OK
 - observed in setup where nginx web server is behind another reverse proxy that translates port 80 to internal 12345
-- recommendation: ```port_in_redirect off;```
-
-## [Hop-by-hop headers](https://tools.ietf.org/html/rfc2616#section-13.5.1)
-
 - Doesn't remove custom hop-by-hop headers listed in `Connection` header.
 - Passes value of `Connection` header as is when acting as a proxy.
 
@@ -149,13 +145,13 @@ This section is based on [Abusing HTTP hop-by-hop request headers](https://natha
 # HTTP/2
 - Tested version - 1.18
 - **Header Names:**
-
+    
     Allowed:`-`
-
+   
     Restricted:`\x00 \x0a \x0d :`   (protocol error)
-
+    
     It removes (doesn't proxy) header with all other symbols
-
+    
     Only in lower case
 
 - **Header Value:**
