@@ -44,6 +44,7 @@ Related articles/white papers/presentations:
 - [HTTP/2: The Sequel is Always Worse](https://portswigger.net/research/http2)
 - [Response Smuggling:Exploiting HTTP/1.1 Connections](https://media.defcon.org/DEF%20CON%2029/DEF%20CON%2029%20presentations/Martin%20Doyhenard%20-%20Response%20Smuggling-%20Pwning%20HTTP-1.1%20Connections.pdf)
 - [Browser-Powered Desync Attacks: A New Frontier in HTTP Request Smuggling](https://portswigger.net/research/browser-powered-desync-attacks)
+- [Making HTTP header injection critical via response queue poisoning](https://portswigger.net/research/making-http-header-injection-critical-via-response-queue-poisoning)
 - [Cache poisoning and other dirty tricks](https://lab.wallarm.com/cache-poisoning-and-other-dirty-tricks-120468f1053f/)
 - [Practical Web Cache Poisoning](https://portswigger.net/research/practical-web-cache-poisoning)
 - [Web Cache Entanglement: Novel Pathways to Poisoning](https://i.blackhat.com/USA-20/Wednesday/us-20-Kettle-Web-Cache-Entanglement-Novel-Pathways-To-Poisoning-wp.pdf)
